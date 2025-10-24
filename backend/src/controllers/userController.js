@@ -282,30 +282,6 @@ const addRateLimitOverride = async (req, res) => {
   }
 };
 
-const getAllUsers = async (req, res) => {
-  try {
-    const { role, isActive } = req.query;
-    const filters = {};
-
-    if (role) filters.role = role;
-    if (isActive !== undefined) filters.isActive = isActive === "true";
-
-    const users = await userService.getAllUsers(filters);
-    logger.info("Users are being Retrieved at Get All Users", users);
-    return res.status(200).json({
-      success: true,
-      message: "Users retrieved successfully",
-      data: { users },
-    });
-  } catch (error) {
-    console.error("Get all users error:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-    });
-  }
-};
-
 const logout = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -385,6 +361,5 @@ module.exports = {
   updateProfile,
   updatePlan,
   addRateLimitOverride,
-  getAllUsers,
   getRateLimitStatus,
 };

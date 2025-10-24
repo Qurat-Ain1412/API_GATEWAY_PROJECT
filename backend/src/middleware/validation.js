@@ -42,8 +42,8 @@ const validateSignup = [
   
   body("role")
     .optional()
-    .isIn(["admin", "agent", "user"])
-    .withMessage("Role must be one of: admin, agent, user"),
+    .isIn(["user"])
+    .withMessage("Role must be user"),
 ];
 
 const validateLogin = [
@@ -126,18 +126,6 @@ const validateUserId = [
     .withMessage("Invalid user ID format"),
 ];
 
-const validateGetAllUsers = [
-  query("role")
-    .optional()
-    .isIn(["admin", "agent", "user"])
-    .withMessage("Role must be one of: admin, agent, user"),
-  
-  query("isActive")
-    .optional()
-    .isBoolean()
-    .withMessage("isActive must be a boolean value"),
-];
-
 module.exports = {
   validateSignup,
   validateLogin,
@@ -145,5 +133,4 @@ module.exports = {
   validateUpdatePlan,
   validateRateLimitOverride,
   validateUserId,
-  validateGetAllUsers,
 };

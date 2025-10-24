@@ -67,10 +67,6 @@ const UserSchema = mongoose.Schema({
     
   },
   rateLimitOverrides: [RateLimitOverrideSchema],
-  isActive: {
-    type: Boolean,
-    default: true,
-  },
 }, {
   timestamps: true,
 });

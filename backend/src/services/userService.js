@@ -103,12 +103,6 @@ const authenticateUser = async (identifier, password) => {
       throw new Error("Invalid credentials");
     }
 
-    // Check if user is active
-    if (!user.isActive) {
-      logger.error("Account is deactivated");
-      throw new Error("Account is deactivated");
-    }
-
     // Compare password
     const isPasswordValid = await comparePassword(password, user.password);
     if (!isPasswordValid) {
@@ -214,32 +208,6 @@ const addRateLimitOverride = async (userId, overrideData) => {
   }
 };
 
-const getAllUsers = async (filters = {}) => {
-  try {
-    const query = {};
-    
-    if (filters.role) {
-      logger.info("Role is being Filtered", filters.role);
-      query.role = filters.role;
-    }
-    
-    if (filters.isActive !== undefined) {
-      logger.info("Is active is being Filtered", filters.isActive);
-      query.isActive = filters.isActive;
-    }
-
-    const users = await User.find(query)
-      .select("-password")
-      .sort({ createdAt: -1 });
-
-    logger.info("Users are being Retrieved", users);
-    return users;
-  } catch (error) {
-    logger.error("Users retrieval failed", error);
-    throw error;
-  }
-};
-
 const logoutUser = async (userId) => {
   try {
     logger.info("User is being logged out", userId);
@@ -272,7 +240,6 @@ module.exports = {
   updateUser,
   updateUserPlan,
   addRateLimitOverride,
-  getAllUsers,
   logoutUser,
   hashPassword,
   comparePassword,

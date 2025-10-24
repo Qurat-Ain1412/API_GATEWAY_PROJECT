@@ -1,6 +1,4 @@
 const userRole = {
-  ADMIN: "admin",
-  AGENT: "agent",
   USER: "user"
 };
 
