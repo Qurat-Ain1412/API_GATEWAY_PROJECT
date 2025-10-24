@@ -113,88 +113,6 @@ const login = async (req, res) => {
   }
 };
 
-const getProfile = async (req, res) => {
-  try {
-    logger.info("Get profile request received", req.user.id);
-    const userId = req.user.id;
-    const user = await userService.findUserById(userId);
-    logger.info("User is being Found by ID at Get Profile", user);
-    if (!user) {
-      logger.error("User not found at Get Profile");
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
-    logger.info("User is being Found by ID at Get Profile", user);
-    return res.status(200).json({
-      success: true,
-      message: "Profile retrieved successfully",
-      data: { user },
-    });
-  } catch (error) {
-    console.error("Get profile error:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-    });
-  }
-};
-
-const updateProfile = async (req, res) => {
-  try {
-    // Check for validation errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      logger.error("Update profile Validation failed", errors.array());
-      return res.status(400).json({
-        success: false,
-        message: "Validation failed",
-        errors: errors.array(),
-      });
-    }
-
-    const userId = req.user.id;
-    const updateData = req.body;
-
-    const user = await userService.updateUser(userId, updateData);
-
-    return res.status(200).json({
-      success: true,
-      message: "Profile updated successfully",
-      data: { user },
-    });
-  } catch (error) {
-    console.error("Update profile error:", error);
-    
-    if (error.message === "User not found") {
-      return res.status(404).json({
-        success: false,
-        message: error.message,
-      });
-    }
-
-    if (error.name === "ValidationError") {
-      const validationErrors = Object.values(error.errors).map(err => ({
-        field: err.path,
-        message: err.message,
-      }));
-      
-      return res.status(400).json({
-        success: false,
-        message: "Validation failed",
-        errors: validationErrors,
-      });
-    }
-
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-    });
-  }
-};
-
-
 const updatePlan = async (req, res) => {
   try {
     // Check for validation errors
@@ -357,8 +275,6 @@ module.exports = {
   signup,
   login,
   logout,
-  getProfile,
-  updateProfile,
   updatePlan,
   addRateLimitOverride,
   getRateLimitStatus,

@@ -71,7 +71,7 @@ const Dashboard = () => {
         setMessage('Failed to update plan')
       }
     } catch (error) {
-      setMessage('Error updating plan')
+      setMessage(error.response.data.message)
     } finally {
       setLoading(false)
     }
@@ -183,9 +183,7 @@ const Dashboard = () => {
                 </div>
               ))}
             </div>
-            <button onClick={fetchRateLimitStatus} className="refresh-btn">
-              Refresh Status
-            </button>
+            
           </div>
         ) : (
           <div>Failed to load rate limit status</div>

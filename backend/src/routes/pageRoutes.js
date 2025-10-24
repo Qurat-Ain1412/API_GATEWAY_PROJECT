@@ -12,6 +12,4 @@ router.use(rateLimiter); // Apply rate limiting to all authenticated routes
 // News API route
 router.get("/news", pageController.getNews);
 
-
-
 module.exports = router;

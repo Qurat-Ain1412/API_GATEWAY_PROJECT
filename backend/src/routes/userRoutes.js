@@ -5,10 +5,8 @@ const rateLimiter = require("../middleware/rateLimiter");
 const {
   validateSignup,
   validateLogin,
-  validateUpdateProfile,
   validateUpdatePlan,
   validateRateLimitOverride,
-  validateGetAllUsers,
 } = require("../middleware/validation");
 
 const router = express.Router();
@@ -24,10 +22,6 @@ router.use(authenticate); // All routes below require authentication
 router.get("/rate-limit-status", userController.getRateLimitStatus);
 
 router.use(rateLimiter); // Apply rate limiting to all other authenticated routes
-
-// User profile routes
-router.get("/profile", userController.getProfile);
-router.put("/profile", validateUpdateProfile, userController.updateProfile);
 router.post("/logout", userController.logout);
 
 // Plan management routes

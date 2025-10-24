@@ -57,42 +57,6 @@ const validateLogin = [
     .withMessage("Password is required"),
 ];
 
-const validateUpdateProfile = [
-  body("first_name")
-    .optional()
-    .trim()
-    .isLength({ min: 2, max: 50 })
-    .withMessage("First name must be between 2 and 50 characters"),
-  
-  body("last_name")
-    .optional()
-    .trim()
-    .isLength({ min: 2, max: 50 })
-    .withMessage("Last name must be between 2 and 50 characters"),
-  
-  body("username")
-    .optional()
-    .trim()
-    .isLength({ min: 3, max: 30 })
-    .withMessage("Username must be between 3 and 30 characters")
-    .matches(/^[a-zA-Z0-9_]+$/)
-    .withMessage("Username can only contain letters, numbers, and underscores"),
-  
-  body("email")
-    .optional()
-    .trim()
-    .isEmail()
-    .withMessage("Please provide a valid email address")
-    .normalizeEmail(),
-  
-  body("password")
-    .optional()
-    .isLength({ min: 6 })
-    .withMessage("Password must be at least 6 characters long")
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/)
-    .withMessage("Password must contain at least one lowercase letter, one uppercase letter, and one number"),
-];
-
 const validateUpdatePlan = [
   body("tier")
     .notEmpty()
@@ -120,17 +84,9 @@ const validateRateLimitOverride = [
     .withMessage("Limit per minute must be between 1 and 1000"),
 ];
 
-const validateUserId = [
-  param("id")
-    .isMongoId()
-    .withMessage("Invalid user ID format"),
-];
-
 module.exports = {
   validateSignup,
   validateLogin,
-  validateUpdateProfile,
   validateUpdatePlan,
   validateRateLimitOverride,
-  validateUserId,
 };

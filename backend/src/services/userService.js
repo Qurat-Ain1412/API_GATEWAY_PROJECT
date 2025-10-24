@@ -131,37 +131,6 @@ const authenticateUser = async (identifier, password) => {
   }
 };
 
-const updateUser = async (userId, updateData) => {
-  try {
-    const { password, ...otherData } = updateData;
-    
-    let updateFields = { ...otherData };
-    
-    // Hash password if provided
-    if (password) {
-      logger.info("Password is being Hashed", password);
-      updateFields.password = await hashPassword(password);
-    }
-
-    const user = await User.findByIdAndUpdate(
-      userId,
-      updateFields,
-      { new: true, runValidators: true }
-    ).select("-password");
-    logger.info("User is being Updated", user);
-    if (!user) {
-      logger.error("User not found");
-      throw new Error("User not found");
-    }
-
-    logger.info("User update successful", user);
-    return user;
-  } catch (error) {
-    logger.error("User update failed", error);
-    throw error;
-  }
-};
-
 const updateUserPlan = async (userId, planData) => {
   try {
     const user = await User.findByIdAndUpdate(
@@ -237,7 +206,6 @@ module.exports = {
   findUserByUsername,
   findUserById,
   authenticateUser,
-  updateUser,
   updateUserPlan,
   addRateLimitOverride,
   logoutUser,
