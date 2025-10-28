@@ -66,7 +66,6 @@ const createUser = async (userData) => {
     // Return user without password
     const { password: _, ...userWithoutPassword } = savedUser.toObject();
     logger.info("User has been Saved Successfully", userWithoutPassword);
-    console.log("userWithoutPassword", userWithoutPassword);
     return userWithoutPassword;
   } catch (error) {
     throw error;

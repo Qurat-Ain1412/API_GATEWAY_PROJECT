@@ -22,13 +22,10 @@ app.use(cors({}));
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-// API routes
-app.use("/api/users", userRoutes);
-app.use("/api/v1", pageRoutes);
-
 app.use(async (req, res, next) => {
   const start = Date.now();
   // Capture the end of response
+  console.log("request logged in app.js");
   res.on("finish", async () => {
     const responseTime = Date.now() - start;
     const logData = {
@@ -50,6 +47,11 @@ app.use(async (req, res, next) => {
 
   next();
 });
+
+// API routes
+app.use("/api/users", userRoutes);
+app.use("/api/v1", pageRoutes);
+
 
 // Global error handler
 app.use((error, req, res, next) => {

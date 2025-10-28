@@ -57,15 +57,14 @@ class RateLimitHelper {
       const limit = PLAN_LIMITS[userPlan] || PLAN_LIMITS.free;
 
       try {
-        console.log("limiter", limiter);
+        // console.log("limiter", limiter);
         // Try to get current status without consuming
         const result = await limiter.get(key);
 
-        console.log("result", result);
+        // console.log("result", result);
         if (result) {
           // Calculate remaining based on total hits
           const remaining = Math.max(0, limit - result.consumedPoints);
-          console.log("Calculated remaining:", remaining, "from limit:", limit, "totalHits:", result.totalHits);
 
           return {
             limit,
@@ -74,7 +73,6 @@ class RateLimitHelper {
           };
         } else {
           // No existing rate limit data - user hasn't made any requests yet
-          console.log("No existing data, returning full limit");
           return {
             limit,
             remaining: limit,

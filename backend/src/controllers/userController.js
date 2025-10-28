@@ -243,11 +243,9 @@ const getRateLimitStatus = async (req, res) => {
     ];
     
     const rateLimitStatus = {};
-    console.log("controller check1", endpoints);
     // Get rate limit status for each endpoint
     for (const endpoint of endpoints) {
       const status = await rateLimitHelper.getRateLimitStatus(userId, endpoint, userPlan);
-      console.log("controller check2", status);
       rateLimitStatus[endpoint] = {
         limit: status.limit,
         remaining: status.remaining,
